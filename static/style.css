@@ -1,0 +1,19 @@
+body {
+    background-color: #00002e;
+    color: white;
+    font-family: 'Roboto';
+    font-size: 48px;
+}
+
+.shortentext {
+    position:relative;
+    margin:0 auto;
+    clear:left;
+    height:auto;
+    z-index: 0;
+    text-align:center;
+}
+
+.search {
+    position:relative;
+}
