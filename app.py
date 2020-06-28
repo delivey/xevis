@@ -6,10 +6,23 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    gen = None
-    return render_template("index.html", gen=gen)
+    new_url = None
+    return render_template("index.html", new_url=new_url)
 
 @app.route("/shorten", methods=["POST"])
 def shorten():
-    gen = generate()
-    return render_template("index.html", gen=gen)
+
+    conn = sqlite3.connect('urls.db') # connects to db
+    db = conn.cursor() # creates the cursor for the connection
+
+    new_url = generate() # database limit is 10 character
+    original_url = request.form.get("url")
+
+    db.execute("INSERT INTO urls (original_url, new_url) VALUES (?, ?)", (original_url, new_url))
+    conn.commit()
+    return render_template("index.html", new_url=new_url)
+
+@app.route("/<gen>/", methods=["GET"])
+def url():
+    conn = sqlite3.connect('urls.db') # connects to db
+    db = conn.cursor() # creates the cursor for the connection

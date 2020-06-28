@@ -6,22 +6,22 @@ shorten url
 
 
 {% block body %}
-{% if gen == None %}
+{% if new_url == None %}
 <div class="shortentext">
     <p>shorten url</p>
 </div>
 
-<div class="form">
+<div class="form"> <!-- limit for length is 50 chars -->
     <form action="/shorten" method="POST">
         <input type="text" name="url" placeholder="URL">
         <br>
         <input type="submit" value="Submit">
       </form>
 </div>
-{% elif gen != None %}
+{% elif new_url != None %}
 <div class="shortentext">
     <p>Your url is:</p>
-    <a href="/{{ gen }}">{{ gen }}</p>
+    <a href="/{{ gen }}">{{ new_url }}</p>
 </div>
 {% endif %}
 {% endblock %}
