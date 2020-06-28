@@ -18,6 +18,9 @@ def shorten():
     new_url = generate() # database limit is 20 character
     original_url = request.form.get("url")
 
+    if original_url == "" or not original_url.startswith("http"):
+        return redirect("/") #TODO: make it redirect to error
+
     try:
         duplicate_url = db.execute("SELECT new_url FROM urls WHERE original_url=(?)", (original_url, )).fetchone()[0]
     except TypeError:
