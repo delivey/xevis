@@ -6,9 +6,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    gen = None
+    return render_template("index.html", gen=gen)
 
 @app.route("/shorten", methods=["POST"])
 def shorten():
     gen = generate()
-    return redirect("/")
+    return render_template("index.html", gen=gen)
