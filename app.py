@@ -1,6 +1,6 @@
 from flask import Flask, redirect, render_template, request
 import sqlite3
-from generation import generate
+from helpers import generate, url_validator
 
 app = Flask(__name__)
 
@@ -18,7 +18,7 @@ def shorten():
     new_url = generate() # database limit is 20 character
     original_url = request.form.get("url")
 
-    if original_url == "" or not original_url.startswith("http"):
+    if original_url == "" or url_validator(original_url) == False:
         return redirect("/") #TODO: make it redirect to error
 
     try:

@@ -1,6 +1,7 @@
 import random
 import string
 import sqlite3
+from urllib.parse import urlparse
 
 def generate():
     conn = sqlite3.connect('urls.db') # connects to db
@@ -23,7 +24,12 @@ def generate():
 
     if finalString == duplicateString:
         generate()
-    
-
     else: 
         return finalString
+
+def url_validator(x):
+    try:
+        result = urlparse(x)
+        return all([result.scheme, result.netloc, result.path])
+    except:
+        return False
