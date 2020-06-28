@@ -22,7 +22,7 @@ def shorten():
     conn.commit()
     return render_template("index.html", new_url=new_url)
 
-@app.route("/url/<gen>/", methods=["GET", "POST"])
+@app.route("/u/<gen>/", methods=["GET", "POST"])
 def url(gen):
     conn = sqlite3.connect('urls.db') # connects to db
     db = conn.cursor() # creates the cursor for the connection
