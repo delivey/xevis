@@ -15,7 +15,7 @@ def shorten():
     conn = sqlite3.connect('urls.db') # connects to db
     db = conn.cursor() # creates the cursor for the connection
 
-    new_url = generate() # database limit is 10 character
+    new_url = generate() # database limit is 20 character
     original_url = request.form.get("url")
 
     db.execute("INSERT INTO urls (original_url, new_url) VALUES (?, ?)", (original_url, new_url))
