@@ -9,7 +9,7 @@ def index():
     new_url = None
     return render_template("index.html", new_url=new_url)
 
-@app.route("/shorten", methods=["POST"])
+@app.route("/shorten/", methods=["POST"])
 def shorten():
 
     conn = sqlite3.connect('urls.db') # connects to db
@@ -17,7 +17,7 @@ def shorten():
 
     new_url = generate() # database limit is 20 character
     original_url = request.form.get("url")
-    
+
     try:
         duplicate_url = db.execute("SELECT new_url FROM urls WHERE original_url=(?)", (original_url, )).fetchone()[0]
     except TypeError:
@@ -33,9 +33,13 @@ def shorten():
 
 @app.route("/<gen>/", methods=["GET", "POST"])
 def url(gen):
-    if gen != "" or "/shorten":
+    if gen != "/" or "/shorten/":
         conn = sqlite3.connect('urls.db') # connects to db
         db = conn.cursor() # creates the cursor for the connection
 
-        original_url = db.execute("SELECT original_url FROM urls WHERE new_url=(?)", (gen,)).fetchone()[0]
-        return redirect(original_url)
+        try:
+            original_url = db.execute("SELECT original_url FROM urls WHERE new_url=(?)", (gen,)).fetchone()[0]
+            return redirect(original_url)
+        except TypeError:
+            original_url = gen
+            return redirect(original_url)

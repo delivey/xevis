@@ -12,15 +12,15 @@ shorten url
 </div>
 
 <div class="form"> <!-- limit for length is 200 chars -->
-    <form action="/shorten" method="POST">
+    <form action="/shorten/" method="POST">
         <input type="text" name="url" placeholder="URL">
         <br>
-        <input type="submit" value="Submit">
+        <button type="submit" value="Submit" class="btn btn-light">Submit</button>
       </form>
 </div>
 {% elif new_url != None %}
 <div class="shortentext">
-    <p>Your url is:</p>
+    <p>your url is:</p>
     <a href="/{{ new_url}}/">127.0.0.1:5000/{{ new_url }}</p>
 </div>
 {% endif %}
