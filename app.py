@@ -17,9 +17,18 @@ def shorten():
 
     new_url = generate() # database limit is 20 character
     original_url = request.form.get("url")
+    
+    try:
+        duplicate_url = db.execute("SELECT new_url FROM urls WHERE original_url=(?)", (original_url, )).fetchone()[0]
+    except TypeError:
+        duplicate_url = False
+    
+    if duplicate_url != False:
+        new_url = duplicate_url
+    else:
+        db.execute("INSERT INTO urls (original_url, new_url) VALUES (?, ?)", (original_url, new_url))
+        conn.commit()
 
-    db.execute("INSERT INTO urls (original_url, new_url) VALUES (?, ?)", (original_url, new_url))
-    conn.commit()
     return render_template("index.html", new_url=new_url)
 
 @app.route("/<gen>/", methods=["GET", "POST"])
