@@ -42,7 +42,7 @@ def generate_qr(url):
 
     img = qr.make_image(fill_color="black", back_color="white")
 
-    path = f'{os.getcwd()}/static/{qr_id}.png'
+    path = f'{os.getcwd()}/static/qr_codes/{qr_id}.png'
     img.save(path)
 
     return qr_id
