@@ -1,8 +1,14 @@
 from flask import Flask, redirect, render_template, request
 import sqlite3
 from helpers import generate, url_validator
+from qr_generator import generate_qr
+import os
+
+QR_CODE_FOLDER = os.path.join('static', 'qr_codes')
 
 app = Flask(__name__)
+
+app.config['UPLOAD_FOLDER'] = QR_CODE_FOLDER
 
 @app.route("/")
 def index():
@@ -18,6 +24,8 @@ def shorten():
     new_url = generate() # database limit is 20 character
     original_url = request.form.get("url")
 
+    qr_id = str(generate_qr(new_url)) + '.png'
+
     if original_url == "" or url_validator(original_url) == False:
         return redirect("/") #TODO: make it redirect to error
 
@@ -32,7 +40,7 @@ def shorten():
         db.execute("INSERT INTO urls (original_url, new_url) VALUES (?, ?)", (original_url, new_url))
         conn.commit()
 
-    return render_template("index.html", new_url=new_url)
+    return render_template("index.html", new_url=new_url, qr_id=qr_id)
 
 @app.route("/<gen>/", methods=["GET", "POST"])
 def url(gen):

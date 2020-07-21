@@ -22,6 +22,7 @@ shorten url
 <div class="shortentext">
     <p>your url is:</p>
     <a href="/{{ new_url}}/">127.0.0.1:5000/{{ new_url }}</p>
+        <img src="{{ url_for('static', filename=qr_id) }}" />
 </div>
 {% endif %}
 {% endblock %}
