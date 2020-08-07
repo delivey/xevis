@@ -2,6 +2,7 @@ import random
 import string
 import sqlite3
 from urllib.parse import urlparse
+import psycopg2
 
 def generate():
     conn = sqlite3.connect('urls.db') # connects to db
