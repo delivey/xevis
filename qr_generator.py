@@ -1,15 +1,22 @@
 import qrcode
-import sqlite3
+# import sqlite3
 import random
 import os
+import psycopg2
 
 def generate_id():
-    conn = sqlite3.connect('urls.db') # connects to db
+    conn = psycopg2.connect(
+    host="localhost",
+    database="urls",
+    user="xevis",
+    password="xevis") # connects to db
     db = conn.cursor() # creates the cursor for the connection
 
     generated_id = random.randint(1, 100000)
     try:
-        duplicate = db.execute("SELECT qr_id FROM qr_codes WHERE qr_id=(?)", (generated_id,)).fetchone()[0]
+        db.execute("SELECT qr_id FROM qr_codes WHERE qr_id=%s", (generated_id,))
+        duplicate = db.fetchone()[0]
+
         duplicate = True
     except TypeError:
         duplicate = False
@@ -17,13 +24,14 @@ def generate_id():
     while duplicate == True:
         generated_id = random.randint(1, 100000)
         try:
-            duplicate = db.execute("SELECT qr_id FROM qr_codes WHERE qr_id=(?)", (generated_id,)).fetchone()[0]
+            db.execute("SELECT qr_id FROM qr_codes WHERE qr_id=%s", (generated_id,))
+            duplicate = db.fetchone()[0]
             duplicate = True
         except TypeError:
             duplicate = False
 
     qr_id = generated_id
-    db.execute("INSERT INTO qr_codes (qr_id) VALUES (?)", (qr_id,))
+    db.execute("INSERT INTO qr_codes (qr_id) VALUES (%s)", (qr_id,))
     conn.commit()
     return qr_id
 

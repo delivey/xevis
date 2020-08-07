@@ -1,5 +1,5 @@
 from flask import Flask, redirect, render_template, request
-import sqlite3
+# import sqlite3
 from helpers import generate, url_validator
 from qr_generator import generate_qr
 import os
@@ -38,7 +38,7 @@ def shorten():
 
     try:
         # duplicate_url = db.execute("SELECT new_url FROM urls WHERE original_url=(?)", (original_url, )).fetchone()[0]
-        db.execute("SELECT new_url FROM urls WHERE original_url=%s'", (original_url, ))
+        db.execute("SELECT new_url FROM urls WHERE original_url=%s", (original_url, ))
         duplicate_url = db.fetchone()[0]
     except TypeError:
         duplicate_url = False
@@ -66,7 +66,7 @@ def url(gen):
 
         try:
             # original_url = db.execute("SELECT original_url FROM urls WHERE new_url=(?)", (gen,)).fetchone()[0]
-            db.execute("SELECT original_url FROM urls WHERE new_url=%s'", (gen,))
+            db.execute("SELECT original_url FROM urls WHERE new_url=%s", (gen,))
             original_url = db.fetchone()[0]
             return redirect(original_url)
         except TypeError:
