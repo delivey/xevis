@@ -31,7 +31,7 @@ def shorten():
     new_url = generate() # database limit is 25 characters
     original_url = request.form.get("url")
 
-    # qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png'
+    qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png'
 
     if original_url == "" or url_validator(original_url) == False:
         return redirect("/") #TODO: make it redirect to error
@@ -50,7 +50,7 @@ def shorten():
         db.execute("INSERT INTO urls (original_url, new_url) VALUES (%s, %s)", (original_url, new_url))
         conn.commit()
 
-    return render_template("index.html", new_url=new_url)  # , qr_id=qr_id)
+    return render_template("index.html", new_url=new_url, qr_id=qr_id)
 
 @app.route("/<gen>/", methods=["GET", "POST"])
 def url(gen):
