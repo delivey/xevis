@@ -1,7 +1,5 @@
 from flask import Flask, redirect, render_template, request
-# import sqlite3
-from helpers import generate, url_validator
-from qr_generator import generate_qr
+from helpers import generate, url_validator, generate_qr
 import os
 import psycopg2
 
@@ -19,8 +17,7 @@ def index():
 @app.route("/shorten/", methods=["POST"])
 def shorten():
     
-    # conn = sqlite3.connect('urls.db')
-    conn = psycopg2.connect(
+    conn = psycopg2.connect( # connects to db
     host="localhost",
     database="urls",
     user="xevis",
@@ -29,17 +26,14 @@ def shorten():
     db = conn.cursor() # creates the cursor for the connection
 
     new_url = generate() # database limit is 25 characters
-    original_url = request.form.get("url")
+    original_url = request.form.get("url") # gets the url from user input
 
-    print(new_url)
-
-    qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png'
+    qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png' # generates the path for the qr code image
 
     if original_url == "" or url_validator(original_url) == False:
         return redirect("/") #TODO: make it redirect to error
 
     try:
-        # duplicate_url = db.execute("SELECT new_url FROM urls WHERE original_url=(?)", (original_url, )).fetchone()[0]
         db.execute("SELECT new_url FROM urls WHERE original_url=%s", (original_url, ))
         duplicate_url = db.fetchone()[0]
     except TypeError:
@@ -48,7 +42,6 @@ def shorten():
     if duplicate_url != False:
         new_url = duplicate_url
     else:
-        # db.execute("INSERT INTO urls (original_url, new_url) VALUES (?, ?)", (original_url, new_url))
         db.execute("INSERT INTO urls (original_url, new_url) VALUES (%s, %s)", (original_url, new_url))
         conn.commit()
 
