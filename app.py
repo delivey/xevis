@@ -31,6 +31,8 @@ def shorten():
     new_url = generate() # database limit is 25 characters
     original_url = request.form.get("url")
 
+    print(new_url)
+
     qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png'
 
     if original_url == "" or url_validator(original_url) == False:

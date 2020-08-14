@@ -19,17 +19,6 @@ CREATE TABLE urls (
 )
 print("'urls' table created successfully!")
 
-db.execute("DROP TABLE IF EXISTS qr_codes")
-db.execute(
-    """
-    CREATE TABLE qr_codes (
-    qr_id INTEGER NOT NULL
-    )
-    """
-)
-print("'qr_codes' table created successfully!")
-conn.commit() # commits the created data
-
 db.execute("INSERT INTO urls (original_url, new_url) VALUES (%s, %s)", ('test successful', 'DB creation successful!'))
 db.execute("SELECT new_url FROM urls WHERE original_url=%s", ('test successful',))
 successful = db.fetchone()[0]
