@@ -32,7 +32,7 @@ def generate():
         db.execute("SELECT new_url FROM urls WHERE new_url=%s", (finalString,))
         duplicateString = db.fetchone()[0]
     except TypeError:
-        duplicateString = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" # shitty approach, will fix later
+        duplicateString = None 
 
     if finalString == duplicateString:
         generate()
