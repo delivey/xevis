@@ -28,7 +28,7 @@ def shorten():
     new_url = generate() # database limit is 25 characters
     original_url = request.form.get("url") # gets the url from user input
 
-    qr_id = 'qr_codes\\' + str(generate_qr(new_url)) + '.png' # generates the path for the qr code image
+    qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png' # generates the path for the qr code image
 
     if original_url == "" or url_validator(original_url) == False:
         return redirect("/") #TODO: make it redirect to error

@@ -4,14 +4,9 @@ body {
     font-family: 'Roboto';
     font-size: 48px;
 }
-
-.shortentext {
-    position:relative;
-    margin:0 auto;
-    clear:left;
-    height:auto;
-    z-index: 0;
-    text-align:center;
+.center {
+   text-align:center;
+   display:block;
 }
 
 .form {
@@ -21,4 +16,10 @@ body {
     height:auto;
     z-index: 0;
     text-align:center;
+}
+
+.input {
+    height: 45px;
+    width: 300px;
+    font-size: 24px;
 }

@@ -7,19 +7,16 @@ shorten url
 
 {% block body %}
 {% if new_url == None %}
-<div class="shortentext">
-    <p>shorten url</p>
-</div>
 
 <div class="form"> <!-- limit for length is 200 chars -->
     <form action="/shorten/" method="POST">
-        <input type="text" name="url" placeholder="URL">
+        <input class="input" type="text" name="url" placeholder="URL">
         <br>
         <button type="submit" value="Submit" class="btn btn-light">Submit</button>
       </form>
 </div>
 {% elif new_url != None %}
-<div class="shortentext">
+<div class="center">
     <p>your url is:</p>
     <a href="/{{ new_url}}/">127.0.0.1:5000/{{ new_url }}</p>
         <img src="{{ url_for('static', filename=qr_id) }}" />
