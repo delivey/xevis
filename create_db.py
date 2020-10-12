@@ -25,7 +25,7 @@ successful = db.fetchone()[0]
 if successful == 'DB creation successful!':
     print('Database creation successful and tested!')
 
-db.execute("DELETE FROM urls WHERE new_url=%s", ('test successful',))
+db.execute("DELETE FROM urls WHERE original_url=%s", ('test successful',))
 
 conn.commit()
 conn.close()
