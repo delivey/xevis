@@ -30,7 +30,7 @@ def shorten():
 
     qr_id = 'qr_codes/' + str(generate_qr(new_url)) + '.png' # generates the path for the qr code image
 
-    if original_url == "" or url_validator(original_url) == False:
+    if original_url == "" or not url_validator(original_url):
         return redirect("/") #TODO: make it redirect to error
 
     try:
