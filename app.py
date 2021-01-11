@@ -49,7 +49,7 @@ def shorten():
 
 @app.route("/<gen>/", methods=["GET", "POST"])
 def url(gen):
-    if gen != "/" or "/shorten/":
+    if gen != "/":
         # conn = sqlite3.connect('urls.db') # connects to db
         conn = psycopg2.connect(
         host="localhost",
